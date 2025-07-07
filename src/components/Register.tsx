@@ -57,7 +57,7 @@ export default function Register() {
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             <div className="px-4 py-5 sm:p-6">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-8">보험금 청구 접수</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-8">누수 사고 접수</h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* 제목 */}
@@ -100,7 +100,7 @@ export default function Register() {
                 {/* 연락처 */}
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    피보험 연락처 <span className="text-red-500">*</span>
+                    피보험자 연락처 <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -118,7 +118,7 @@ export default function Register() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                      피보험주소 <span className="text-red-500">*</span>
+                      피보험자 주소 <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -174,27 +174,20 @@ export default function Register() {
                   </div>
                 </div>
 
-                {/* 피보험 성향 */}
+                {/* 성향 내역 */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    피보험 성향 <span className="text-red-500">*</span>
+                  <label htmlFor="note" className="block text-sm font-medium text-gray-700">
+                    피보험자 성향
                   </label>
-                  <div className="flex space-x-4">
-                    {['cause', 'damage', 'other'].map(type => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, type }))}
-                        className={`px-4 py-2 rounded-md text-sm font-medium ${
-                          formData.type === type
-                            ? 'bg-sky-500 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        {type === 'cause' ? '원인' : type === 'damage' ? '피해' : '기타'}
-                      </button>
-                    ))}
-                  </div>
+                  <textarea
+                    id="note"
+                    name="note"
+                    value={formData.note}
+                    onChange={handleInputChange}
+                    placeholder="성향을 입력해 주세요"
+                    rows={4}
+                    className="py-2 px-4 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
+                  />
                 </div>
 
                 {/* 특이사항 */}

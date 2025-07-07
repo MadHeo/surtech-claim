@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const menuItems = [
     {
       id: 'accident-list',
-      title: '홈',
+      title: '사고 리스트',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -26,8 +26,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       ),
       onClick: () => {
         setActiveMenu('accident-list');
-        console.log('사고 리스트 클릭');
         onClose();
+        navigate('/list');
       },
     },
     {
@@ -51,7 +51,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     },
     {
       id: 'my-page',
-      title: '마이 페이지',
+      title: '내 정보',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       ),
       onClick: () => {
         setActiveMenu('my-page');
-        console.log('마이 페이지 클릭');
+        navigate('/mypage');
         onClose();
       },
     },
