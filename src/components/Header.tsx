@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -9,8 +9,8 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    console.log("로그아웃");
-    navigate("/login");
+    console.log('로그아웃');
+    navigate('/login');
   };
 
   return (
@@ -23,12 +23,7 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
               onClick={onMenuToggle}
               className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -40,9 +35,9 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
 
             {/* 로고 및 제목 */}
             <div className="ml-4 flex items-center">
-              <h1 className="text-xl font-semibold text-gray-900">
-                SurTech Claim
-              </h1>
+              <button onClick={() => navigate('/home')}>
+                <h1 className="text-xl font-semibold text-gray-900">SurTech Claim</h1>
+              </button>
             </div>
           </div>
 

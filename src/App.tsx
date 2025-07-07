@@ -1,12 +1,8 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import Login from "./components/Login";
-import Home from "./components/Home";
-import "./App.css";
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import './App.css';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -16,6 +12,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>

@@ -1,20 +1,21 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const [activeMenu, setActiveMenu] = useState<string>('accident-list');
+  const navigate = useNavigate();
+
   const menuItems = [
     {
-      id: "accident-list",
-      title: "사고 리스트",
+      id: 'accident-list',
+      title: '홈',
       icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -24,20 +25,16 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </svg>
       ),
       onClick: () => {
-        console.log("사고 리스트 클릭");
+        setActiveMenu('accident-list');
+        console.log('사고 리스트 클릭');
         onClose();
       },
     },
     {
-      id: "accident-report",
-      title: "사고 접수하기",
+      id: 'accident-report',
+      title: '사고 접수하기',
       icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -47,20 +44,16 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </svg>
       ),
       onClick: () => {
-        console.log("사고 접수하기 클릭");
+        setActiveMenu('accident-report');
+        navigate('/register');
         onClose();
       },
     },
     {
-      id: "my-page",
-      title: "마이 페이지",
+      id: 'my-page',
+      title: '마이 페이지',
       icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -70,7 +63,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </svg>
       ),
       onClick: () => {
-        console.log("마이 페이지 클릭");
+        setActiveMenu('my-page');
+        console.log('마이 페이지 클릭');
         onClose();
       },
     },
@@ -80,17 +74,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     <>
       {/* 오버레이 */}
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-gray-600 bg-opacity-75 z-40 lg:hidden"
-          onClick={onClose}
-        />
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-75 z-40 lg:hidden" onClick={onClose} />
       )}
 
       {/* 사이드바 */}
       <div
         className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 h-full
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
       >
         <div className="flex flex-col h-full">
@@ -101,12 +92,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               onClick={onClose}
               className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -119,15 +105,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
           {/* 메뉴 아이템들 */}
           <nav className="flex-1 px-4 py-6 space-y-2">
-            {menuItems.map((item) => (
+            {menuItems.map(item => (
               <button
                 key={item.id}
                 onClick={item.onClick}
-                className="w-full flex items-center px-4 py-3 text-left text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 rounded-md transition-colors duration-200"
+                className={`w-full flex items-center px-4 py-3 text-left rounded-md transition-colors duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:cursor-pointer text-gray-700 
+                ${activeMenu === item.id ? 'bg-indigo-100 text-indigo-700' : ''}`}
               >
-                <span className="mr-3 text-gray-400 group-hover:text-indigo-500">
-                  {item.icon}
-                </span>
+                <span className="mr-3 text-gray-400 group-hover:text-indigo-500">{item.icon}</span>
                 <span className="font-medium">{item.title}</span>
               </button>
             ))}

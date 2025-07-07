@@ -14,7 +14,7 @@ export default function Login() {
       return;
     }
 
-    if (email === "test" && password === "test") {
+    if (email === "test@test.com" && password === "test") {
       navigate("/home");
       return;
     } else {
@@ -24,10 +24,10 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-400 to-blue-500 px-4">
       <div className="w-full max-w-md bg-white/30 backdrop-blur-md p-10 rounded-2xl shadow-2xl border border-white/20">
         <h2 className="text-3xl font-bold text-white text-center mb-8">
-          환영합니다 <span className="animate-wave inline-block">👋</span>
+          안샘 사고 접수
         </h2>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -36,7 +36,7 @@ export default function Login() {
             <div className="flex items-center bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl px-4 py-3">
               <FiMail className="text-white mr-3" />
               <input
-                type="text"
+                type="email"
                 placeholder="아이디를 입력해 주세요"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -66,16 +66,6 @@ export default function Login() {
             로그인
           </button>
         </form>
-
-        <p className="text-sm text-white/80 text-center mt-6">
-          계정이 없으신가요?{" "}
-          <a
-            href="/signup"
-            className="text-white font-medium underline hover:text-white"
-          >
-            회원가입
-          </a>
-        </p>
       </div>
     </div>
   );
