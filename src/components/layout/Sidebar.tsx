@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -7,12 +6,13 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
-  const [activeMenu, setActiveMenu] = useState<string>('accident-list');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
     {
       id: 'accident-list',
+      path: '/list',
       title: '사고 리스트',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,13 +25,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </svg>
       ),
       onClick: () => {
-        setActiveMenu('accident-list');
-        onClose();
         navigate('/list');
+        onClose();
       },
     },
     {
       id: 'accident-report',
+      path: '/register',
       title: '사고 접수하기',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,13 +44,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </svg>
       ),
       onClick: () => {
-        setActiveMenu('accident-report');
         navigate('/register');
         onClose();
       },
     },
     {
       id: 'my-page',
+      path: '/mypage',
       title: '내 정보',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,7 +63,6 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </svg>
       ),
       onClick: () => {
-        setActiveMenu('my-page');
         navigate('/mypage');
         onClose();
       },
@@ -110,7 +109,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 key={item.id}
                 onClick={item.onClick}
                 className={`w-full flex items-center px-4 py-3 text-left rounded-md transition-colors duration-200 hover:bg-indigo-50 hover:text-indigo-700 hover:cursor-pointer text-gray-700 
-                ${activeMenu === item.id ? 'bg-indigo-100 text-indigo-700' : ''}`}
+                ${location.pathname === item.path ? 'bg-indigo-100 text-indigo-700' : ''}`}
               >
                 <span className="mr-3 text-gray-400 group-hover:text-indigo-500">{item.icon}</span>
                 <span className="font-medium">{item.title}</span>

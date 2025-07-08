@@ -2,6 +2,7 @@ import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-d
 import './App.css';
 import Login from './components/auth/Login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import Detail from './components/pages/Detail';
 import Home from './components/pages/Home';
 import List from './components/pages/List';
 import MyPage from './components/pages/MyPage';
@@ -43,6 +44,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <MyPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/detail/:id"
+            element={
+              <ProtectedRoute>
+                <Detail />
               </ProtectedRoute>
             }
           />
