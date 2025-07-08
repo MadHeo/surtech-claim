@@ -32,7 +32,7 @@ const List: React.FC<ListProps> = () => {
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
   const [listData, setListData] = useState<ListItem[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  // const [totalPages, setTotalPages] = useState<number>(0);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const List: React.FC<ListProps> = () => {
     setListData(response.data.items);
     setCurrentPage(response.data.currentPage);
     setTotalItems(response.data.totalItems);
-    setTotalPages(response.data.totalPages);
+    // setTotalPages(response.data.totalPages);
   };
 
   // 검색 처리
