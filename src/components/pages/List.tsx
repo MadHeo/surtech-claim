@@ -3,13 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { getList } from '../../api/insurtech';
 import Layout from '../layout/Layout';
 
-interface ListResponse {
-  currentPage: number;
-  totalItems: number;
-  totalPages: number;
-  items: ListItem[];
-}
-
 interface ListItem {
   id: number;
   insuranceCompany: string;
@@ -275,7 +268,7 @@ const List: React.FC<ListProps> = () => {
           <div className="px-6 py-4 border-t border-gray-200">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-700">
-                {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(currentPage * itemsPerPage, totalItems)} / 총 ${totalItems}개`}
+                {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(currentPage * itemsPerPage, totalItems)} / 총 ${totalPages}개`}
               </div>
               <div className="flex items-center space-x-2">
                 <button
