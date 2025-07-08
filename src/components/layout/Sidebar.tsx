@@ -119,7 +119,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
           {/* 사이드바 푸터 */}
           <div className="p-4 border-t border-gray-200">
-            <div className="text-sm text-gray-500">SurTech Claim v1.0</div>
+            <div className="text-sm text-gray-500">homesur-claim v1.0</div>
           </div>
         </div>
       </div>

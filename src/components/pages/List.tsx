@@ -266,11 +266,11 @@ const List: React.FC<ListProps> = () => {
 
           {/* 페이지네이션 */}
           <div className="px-6 py-4 border-t border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-700">
+            <div className="flex items-center justify-center">
+              {/* <div className="text-sm text-gray-700">
                 {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(currentPage * itemsPerPage, totalItems)} / 총 ${totalPages}개`}
-              </div>
-              <div className="flex items-center space-x-2">
+              </div> */}
+              <div className="flex items-center space-x-2 ">
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
