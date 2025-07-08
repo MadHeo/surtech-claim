@@ -1,6 +1,6 @@
 import { FiMail } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import Layout from './Layout';
+import Layout from '../layout/Layout';
 
 const Home = () => {
   const navigate = useNavigate();

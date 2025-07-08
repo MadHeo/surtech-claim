@@ -1,6 +1,6 @@
-import { useState } from "react";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import { useState } from 'react';
+import Header from './Header';
+import Sidebar from './Sidebar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -28,9 +28,7 @@ const Layout = ({ children }: LayoutProps) => {
 
         {/* 메인 콘텐츠 */}
         <main className="flex-1 lg:ml-0 overflow-auto">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {children}
-          </div>
+          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{children}</div>
         </main>
       </div>
     </div>

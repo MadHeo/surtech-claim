@@ -1,7 +1,10 @@
 import { FaUser } from 'react-icons/fa';
-import Layout from './Layout';
+import Layout from '../layout/Layout';
 
 export default function MyPage() {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const { insuranceCompany, userId, username } = userInfo;
+
   const profileImage = null; // 여기에 실제 프로필 이미지 URL이 들어갈 수 있습니다
 
   return (
@@ -28,17 +31,26 @@ export default function MyPage() {
           <div className="w-full max-w-[464px] space-y-6">
             <div className="space-y-2">
               <div className="opacity-80 text-black text-sm font-medium font-['Poppins']">
-                e-mail
+                보험회사
               </div>
               <div className="w-full h-10 bg-stone-50 rounded-md flex items-center px-4">
-                <div className="opacity-70 text-black text-sm font-normal">hansam@test.com</div>
+                <div className="opacity-70 text-black text-sm font-normal">{insuranceCompany}</div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="opacity-80 text-black text-sm font-medium font-['Poppins']">
+                아이디
+              </div>
+              <div className="w-full h-10 bg-stone-50 rounded-md flex items-center px-4">
+                <div className="opacity-70 text-black text-sm font-normal">{userId}</div>
               </div>
             </div>
 
             <div className="space-y-2">
               <div className="opacity-80 text-black text-sm font-medium font-['Poppins']">이름</div>
               <div className="w-full h-10 bg-stone-50 rounded-md flex items-center px-4">
-                <div className="opacity-70 text-black text-sm font-normal">김한샘</div>
+                <div className="opacity-70 text-black text-sm font-normal">{username}</div>
               </div>
             </div>
           </div>

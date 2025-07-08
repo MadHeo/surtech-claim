@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import homsurLogo from '../../assets/homsur-logo-2.png';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -9,8 +10,10 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    // localStorage에서 토큰 제거
+    localStorage.removeItem('authToken');
     console.log('로그아웃');
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -36,7 +39,7 @@ const Header = ({ onMenuToggle }: HeaderProps) => {
             {/* 로고 및 제목 */}
             <div className="ml-4 flex items-center">
               <button onClick={() => navigate('/home')}>
-                <h1 className="text-xl font-semibold text-gray-900">SurTech Claim</h1>
+                <img src={homsurLogo} alt="홈슈어" className="w-24 h-auto" />
               </button>
             </div>
           </div>
