@@ -193,7 +193,8 @@ const List: React.FC<ListProps> = () => {
 
           {/* 테이블 */}
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+            {/* 데스크톱 테이블 뷰 */}
+            <table className="hidden md:table min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -206,24 +207,7 @@ const List: React.FC<ListProps> = () => {
                     접수상태
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center">
-                      접수일
-                      {/* <button onClick={handleSort} className="ml-2">
-                        <svg
-                          className="h-4 w-4 text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                          />
-                        </svg>
-                      </button> */}
-                    </div>
+                    <div className="flex items-center">접수일</div>
                   </th>
                 </tr>
               </thead>
@@ -262,15 +246,53 @@ const List: React.FC<ListProps> = () => {
                 })}
               </tbody>
             </table>
+
+            {/* 모바일 카드 뷰 */}
+            <div className="md:hidden space-y-4 p-4">
+              {listData?.map(item => {
+                const statusStyle = getStatusStyle(item.status);
+                return (
+                  <div
+                    key={item.id}
+                    className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                    onClick={() => handleDetail(item.id)}
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="space-y-1">
+                        <span className="text-sm font-medium text-gray-500">접수번호</span>
+                        <p className="text-base font-semibold text-gray-900">{item.claimNumber}</p>
+                      </div>
+                      <div className="flex items-center px-3 py-1.5 rounded-full bg-gray-50">
+                        <div
+                          className={`h-2.5 w-2.5 rounded-full ${statusStyle?.bgColor} mr-2`}
+                        ></div>
+                        <span className={`text-sm ${statusStyle?.textColor} font-medium`}>
+                          {statusStyle?.text}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-gray-500">주소</span>
+                        <p className="text-base text-blue-600 mt-1">
+                          {item.address} {item.addressDetail}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-500">접수일</span>
+                        <p className="text-sm text-gray-700 mt-1">{item.createdAt}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* 페이지네이션 */}
           <div className="px-6 py-4 border-t border-gray-200">
             <div className="flex items-center justify-center">
-              {/* <div className="text-sm text-gray-700">
-                {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(currentPage * itemsPerPage, totalItems)} / 총 ${totalPages}개`}
-              </div> */}
-              <div className="flex items-center space-x-2 ">
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
@@ -289,19 +311,26 @@ const List: React.FC<ListProps> = () => {
                     />
                   </svg>
                 </button>
-                {Array.from({ length: Math.ceil(totalItems / itemsPerPage) }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handlePageChange(index + 1)}
-                    className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md ${
-                      currentPage === index + 1
-                        ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                        : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
+                {/* 데스크톱 페이지 번호 */}
+                <div className="hidden md:flex space-x-2">
+                  {Array.from({ length: Math.ceil(totalItems / itemsPerPage) }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md ${
+                        currentPage === index + 1
+                          ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+                          : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+                {/* 모바일 현재 페이지 표시 */}
+                <div className="md:hidden text-sm text-gray-700">
+                  {currentPage} / {Math.ceil(totalItems / itemsPerPage)}
+                </div>
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === Math.ceil(totalItems / itemsPerPage)}
