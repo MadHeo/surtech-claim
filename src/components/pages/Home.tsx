@@ -7,33 +7,22 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="px-4 py-6 sm:px-0">
-        <div className="border-4 border-dashed border-gray-200 rounded-lg min-h-[calc(100vh-200px)] flex items-center justify-center">
-          <div className="text-center w-full max-w-md px-4">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">환영합니다!</h2>
-
-            <button
-              className="w-full mt-6 hover:cursor-pointer max-w-sm"
-              onClick={() => navigate('/register')}
-            >
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5 ">
-                  <div className="flex items-center ">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-8 bg-indigo-500 rounded-md flex items-center justify-center">
-                        <FiPlus className="text-white" />
-                      </div>
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <span className="text-lg font-medium text-gray-900 hover:cursor-pointer">
-                        새로운 사고 접수하기
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </button>
-          </div>
+      <div className="px-4 py-6 sm:px-0 flex items-center justify-center min-h-[calc(100vh-200px)]">
+        {/* 중앙 카드 - 트렌디한 스타일 적용 */}
+        <div className="w-full max-w-md bg-white/90 rounded-2xl shadow-2xl p-10 flex flex-col items-center">
+          {/* 환영 메시지 */}
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">환영합니다!</h2>
+          <p className="text-gray-500 mb-8 text-center text-base">
+            아래 버튼을 눌러 신규 요청할 수 있습니다.
+          </p>
+          {/* 새로운 사고 접수하기 버튼 */}
+          <button
+            className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-indigo-500 hover:bg-indigo-600 transition-colors duration-200 shadow-md text-white text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            onClick={() => navigate('/register')}
+          >
+            <FiPlus className="text-2xl" />
+            새로운 사고 접수하기
+          </button>
         </div>
       </div>
     </Layout>
