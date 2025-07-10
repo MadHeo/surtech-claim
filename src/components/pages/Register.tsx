@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import DaumPostcode from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
 import { submitToInsurtech, type InsurtechClaimData } from '../../api/insurtech';
+import { useModal } from '../../hooks/useModal';
+import AddressSearchModal from '../AddressSearchModal';
 import Layout from '../layout/Layout';
+import Modal from '../Modal';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -18,6 +20,13 @@ export default function Register() {
 
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const navigate = useNavigate();
+
+  // useModal 훅 사용
+  const {
+    open: isConfirmModalOpen,
+    modalProps: confirmModalProps,
+    showModal: showConfirmModal,
+  } = useModal();
 
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
@@ -40,9 +49,26 @@ export default function Register() {
     setIsAddressModalOpen(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // 폼 제출 시 모달을 먼저 띄움
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (formData.address === '') {
+      alert('주소를 입력해 주세요.');
+      return;
+    }
+
+    showConfirmModal({
+      title: '접수 확인',
+      description: '접수하시겠습니까?',
+      confirmText: '확인',
+      cancelText: '취소',
+      onConfirm: () => handleSubmit(),
+    });
+  };
+
+  // 실제 submit 함수 (내부에서만 사용)
+  const handleSubmit = async () => {
     try {
       // API 스펙에 맞게 데이터 변환
       const apiData: InsurtechClaimData = {
@@ -102,7 +128,7 @@ export default function Register() {
             <div className="px-4 py-5 sm:p-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-8">사고 접수</h2>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleFormSubmit} className="space-y-6">
                 {/* 사고번호 */}
                 <div>
                   <label htmlFor="cliamNo" className="block text-sm font-medium text-gray-700 mb-2">
@@ -151,7 +177,6 @@ export default function Register() {
                       id="address"
                       name="address"
                       value={formData.address}
-                      readOnly
                       placeholder="주소 검색"
                       className="py-2 px-4 mt-1 block w-[80%] rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm bg-gray-50"
                       required
@@ -160,9 +185,22 @@ export default function Register() {
                     <button
                       type="button"
                       onClick={() => setIsAddressModalOpen(true)}
-                      className="w-[20%] mt-1 px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:text-sm text-sm"
+                      className="w-[20%] mt-1 px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:text-sm text-sm flex items-center justify-center"
                     >
-                      검색
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -172,7 +210,7 @@ export default function Register() {
                     htmlFor="addressDetail"
                     className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    상세주소 <span className="text-red-500">*</span>
+                    상세주소
                   </label>
                   <input
                     type="text"
@@ -182,7 +220,6 @@ export default function Register() {
                     onChange={handleInputChange}
                     placeholder="상세주소 입력"
                     className="py-2 px-4 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
-                    required
                   />
                 </div>
 
@@ -304,30 +341,14 @@ export default function Register() {
       </div>
 
       {/* 주소 검색 모달 */}
-      {isAddressModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-lg shadow-xl max-w-lg w-full">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-medium">주소 검색</h3>
-              <button
-                onClick={() => setIsAddressModalOpen(false)}
-                className="text-gray-400 hover:text-gray-500"
-              >
-                <span className="sr-only">닫기</span>
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <DaumPostcode onComplete={handleComplete} autoClose={false} style={{ height: 400 }} />
-          </div>
-        </div>
-      )}
+      <AddressSearchModal
+        open={isAddressModalOpen}
+        onClose={() => setIsAddressModalOpen(false)}
+        onComplete={handleComplete}
+      />
+
+      {/* 확인 모달 */}
+      <Modal open={isConfirmModalOpen} {...confirmModalProps} />
     </Layout>
   );
 }

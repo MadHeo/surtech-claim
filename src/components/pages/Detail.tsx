@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getDetail } from '../../api/insurtech';
-import { formatPhoneNumber } from '../../utils/utils';
+import { formatDateTime, formatPhoneNumber } from '../../utils/utils';
 import Layout from '../layout/Layout';
 
 interface DetailData {
@@ -103,9 +103,15 @@ export default function Detail() {
                       : '접수'}
                 </span>
               </div>
+              {/* 접수 일시 */}
 
               <div className="space-y-4">
                 {/* 기본 정보 그리드 */}
+                <div className="border-b border-gray-200 pb-3">
+                  <h3 className="text-xs font-medium text-gray-500">접수일시</h3>
+                  <p className="mt-1 text-sm text-gray-900">{formatDateTime(data.createdAt)}</p>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   {/* 사고번호 */}
                   <div className="border-b border-gray-200 pb-3">
@@ -187,12 +193,6 @@ export default function Detail() {
                   >
                     {data.insuranceCreateNote || '(입력되지 않음)'}
                   </p>
-                </div>
-
-                {/* 등록 일시 */}
-                <div className="text-xs text-gray-500">
-                  <span>등록일시: </span>
-                  <span>{new Date(data.createdAt).toLocaleString()}</span>
                 </div>
               </div>
 

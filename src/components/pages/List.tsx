@@ -1,24 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getList } from '../../api/insurtech';
+import type { ListItem } from '../../utils/utils';
+import { formatDateTime, getStatusStyle } from '../../utils/utils';
 import Layout from '../layout/Layout';
-
-interface ListItem {
-  id: number;
-  insuranceCompany: string;
-  status: string;
-  requestType: string;
-  caseType: string;
-  insuranceCreateNote: string;
-  insuredPreference: string;
-  insuranceLeakCause: string;
-  address: string;
-  addressDetail: string;
-  customerTellNo: string;
-  claimNumber: string;
-  createdByInsuranceMemberName: string;
-  createdAt: string;
-}
 
 interface ListProps {
   // 필요한 props 정의
@@ -69,42 +54,6 @@ const List: React.FC<ListProps> = () => {
   const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
   }, []);
-
-  // 상태에 따른 스타일 및 텍스트 반환
-  const getStatusStyle = (status: ListItem['status']) => {
-    switch (status) {
-      case 'DISPATCH':
-        return {
-          bgColor: 'bg-blue-500',
-          text: '접수',
-          textColor: 'text-blue-500',
-        };
-      case 'CONSTRUCTION_SCHEDULING':
-        return {
-          bgColor: 'bg-green-400',
-          text: '시공일정조율',
-          textColor: 'text-green-400',
-        };
-      case 'CONSTRUCTION':
-        return {
-          bgColor: 'bg-green-500',
-          text: '시공',
-          textColor: 'text-green-500',
-        };
-      case 'COST':
-        return {
-          bgColor: 'bg-orange-500',
-          text: '비용정산',
-          textColor: 'text-orange-500',
-        };
-      case 'COMPLETED':
-        return {
-          bgColor: 'bg-gray-500',
-          text: '종결',
-          textColor: 'text-gray-500',
-        };
-    }
-  };
 
   const handleDetail = (id: number) => {
     navigate(`/detail/${id}`);
@@ -198,7 +147,7 @@ const List: React.FC<ListProps> = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    접수번호
+                    <div className="flex items-center">접수일</div>
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     요약
@@ -207,7 +156,7 @@ const List: React.FC<ListProps> = () => {
                     접수상태
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <div className="flex items-center">접수일</div>
+                    접수번호
                   </th>
                 </tr>
               </thead>
@@ -217,7 +166,7 @@ const List: React.FC<ListProps> = () => {
                   return (
                     <tr key={item.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {item.claimNumber}
+                        {formatDateTime(item.createdAt)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <a
@@ -239,7 +188,7 @@ const List: React.FC<ListProps> = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {item.createdAt}
+                        {item.claimNumber}
                       </td>
                     </tr>
                   );
@@ -259,8 +208,10 @@ const List: React.FC<ListProps> = () => {
                   >
                     <div className="flex justify-between items-start mb-4">
                       <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-500">접수번호</span>
-                        <p className="text-base font-semibold text-gray-900">{item.claimNumber}</p>
+                        <span className="text-sm font-medium text-gray-500">접수일</span>
+                        <p className="text-base font-medium text-gray-900">
+                          {formatDateTime(item.createdAt)}
+                        </p>
                       </div>
                       <div className="flex items-center px-3 py-1.5 rounded-full bg-gray-50">
                         <div
@@ -279,8 +230,8 @@ const List: React.FC<ListProps> = () => {
                         </p>
                       </div>
                       <div>
-                        <span className="text-sm font-medium text-gray-500">접수일</span>
-                        <p className="text-sm text-gray-700 mt-1">{item.createdAt}</p>
+                        <span className="text-sm font-medium text-gray-500">접수번호</span>
+                        <p className="text-sm text-gray-700 mt-1">{item.claimNumber}</p>
                       </div>
                     </div>
                   </div>

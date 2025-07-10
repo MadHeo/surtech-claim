@@ -120,7 +120,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
           {/* 사이드바 푸터 */}
           <div className="p-4 border-t border-gray-200">
-            <div className="text-sm text-gray-500">homesur-claim v1.0</div>
+            {/* 저작권 표기 */}
+            {/* <div className="text-sm text-gray-500">홈슈어 v1.0</div> */}
+            <div className="text-xs text-gray-400 mt-1">
+              &copy; 2025 홈슈어. All rights reserved.
+            </div>
           </div>
         </div>
       </div>
