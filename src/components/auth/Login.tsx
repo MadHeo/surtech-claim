@@ -17,7 +17,7 @@ export default function Login() {
       id: '흥국',
     },
     {
-      name: 'AXA',
+      name: '악사',
       id: 'AXA',
     },
   ];
