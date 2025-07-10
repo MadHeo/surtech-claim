@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   // 사고접수 리스트 데이터 상태
-  const [listData, setListData] = useState<ListItem[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,7 +60,6 @@ const Home = () => {
       try {
         const response = await getList();
         const items = response.data.items || [];
-        setListData(items);
 
         // 오늘 접수: 오늘(createdAt) + 상태 무관
         const todayReceived = items.filter((item: ListItem) => isToday(item.createdAt)).length;
